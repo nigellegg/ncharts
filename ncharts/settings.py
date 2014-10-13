@@ -70,16 +70,16 @@ DATABASES = {
 #####
 #  S3 Storage
 #####
-DEFAULT_FILE_STORAGE = 'ostabs2.s3utils.MediaS3BotoStorage'
-STATICFILES_STORAGE = 'ostabs2.s3utils.StaticS3BotoStorage'
-AWS_ACCESS_KEY_ID = 'AKIAJZ3Y7KJTPMCQJ4EQ'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'osmium'
-S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-STATIC_DIRECTORY = '/static/'
-MEDIA_DIRECTORY = '/media/'
-STATIC_URL = S3_URL + STATIC_DIRECTORY
-MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+#DEFAULT_FILE_STORAGE = 'ncharts.s3utils.MediaS3BotoStorage'
+#STATICFILES_STORAGE = 'n.s3utils.StaticS3BotoStorage'
+#AWS_ACCESS_KEY_ID = 'AKIAJZ3Y7KJTPMCQJ4EQ'
+#AWS_SECRET_ACCESS_KEY = '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'
+#AWS_STORAGE_BUCKET_NAME = 'osmium'
+#S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#STATIC_DIRECTORY = '/static/'
+#MEDIA_DIRECTORY = '/media/'#
+#STATIC_URL = S3_URL + STATIC_DIRECTORY
+#MEDIA_URL = S3_URL + MEDIA_DIRECTORY
 
 
 # Internationalization
@@ -104,12 +104,22 @@ PROJECT_DIR = Path(PROJECT_ROOT).parent
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+STATIC_ROOT = PROJECT_DIR.child("static")
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    PROJECT_DIR.child("public").child("static"),
+)
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'djangobower.finders.BowerFinder',
 )
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+MEDIA_URL = '/media/'
 
 TEMP_ROOT = os.path.join(PROJECT_ROOT, 'temp')
 TEMP_URL = '/temp/'
@@ -134,5 +144,4 @@ BOWER_INSTALLED_APPS = (
     'd3#3.3.6',
     'nvd3#1.1.12-beta',
 )
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+    
