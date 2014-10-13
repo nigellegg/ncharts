@@ -67,21 +67,6 @@ DATABASES = {
     }
 }
 
-#####
-#  S3 Storage
-#####
-#DEFAULT_FILE_STORAGE = 'ncharts.s3utils.MediaS3BotoStorage'
-#STATICFILES_STORAGE = 'n.s3utils.StaticS3BotoStorage'
-#AWS_ACCESS_KEY_ID = 'AKIAJZ3Y7KJTPMCQJ4EQ'
-#AWS_SECRET_ACCESS_KEY = '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'
-#AWS_STORAGE_BUCKET_NAME = 'osmium'
-#S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-#STATIC_DIRECTORY = '/static/'
-#MEDIA_DIRECTORY = '/media/'#
-#STATIC_URL = S3_URL + STATIC_DIRECTORY
-#MEDIA_URL = S3_URL + MEDIA_DIRECTORY
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
