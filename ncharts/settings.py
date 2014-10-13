@@ -10,6 +10,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from unipath import Path
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -36,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangobower',
+    'django_nvd3',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,6 +67,21 @@ DATABASES = {
     }
 }
 
+#####
+#  S3 Storage
+#####
+DEFAULT_FILE_STORAGE = 'ostabs2.s3utils.MediaS3BotoStorage'
+STATICFILES_STORAGE = 'ostabs2.s3utils.StaticS3BotoStorage'
+AWS_ACCESS_KEY_ID = 'AKIAJZ3Y7KJTPMCQJ4EQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'osmium'
+S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+STATIC_DIRECTORY = '/static/'
+MEDIA_DIRECTORY = '/media/'
+STATIC_URL = S3_URL + STATIC_DIRECTORY
+MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -78,5 +98,41 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+PROJECT_DIR = Path(PROJECT_ROOT).parent
 
-STATIC_URL = '/static/'
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+TEMP_ROOT = os.path.join(PROJECT_ROOT, 'temp')
+TEMP_URL = '/temp/'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+)
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader'
+)
+
+TEMPLATE_DIRS = (
+    PROJECT_DIR.child("templates"),
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
+BOWER_PATH = '/usr/local/bin/bower'
+BOWER_INSTALLED_APPS = (
+    'd3#3.3.6',
+    'nvd3#1.1.12-beta',
+)
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
